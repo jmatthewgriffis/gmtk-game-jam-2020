@@ -18,4 +18,29 @@ public class GameController : MonoBehaviour
     isRightPressed = Input.GetKey("d") || Input.GetKey("right");
     isSpacePressed = Input.GetKey("space");
   }
+
+  public bool ShouldMoveForward()
+  {
+    return isUpPressed;
+  }
+
+  public bool ShouldRotateLeft()
+  {
+    return isLeftPressed;
+  }
+
+  public bool ShouldMoveBackward()
+  {
+    return isDownPressed;
+  }
+
+  public bool ShouldRotateRight()
+  {
+    return isRightPressed;
+  }
+
+  public bool ShouldFire()
+  {
+    return isSpacePressed;
+  }
 }
