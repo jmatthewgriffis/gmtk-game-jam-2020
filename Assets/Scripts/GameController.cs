@@ -27,6 +27,9 @@ class Key
 
 public class GameController : MonoBehaviour
 {
+  public int minTimeBetweenChanges = 10;
+  public int maxTimeBetweenChanges = 20;
+  public int alertDuration = 5;
   public Text alertText;
   public Text upText;
   public Text leftText;
@@ -278,7 +281,7 @@ public class GameController : MonoBehaviour
     }
     while (true)
     {
-      yield return new WaitForSeconds(5);
+      yield return new WaitForSeconds(Random.Range(minTimeBetweenChanges, maxTimeBetweenChanges));
       UpdateAlertText();
       List<string> keyNamesCopy = new List<string>(keyNames);
       foreach (string name in controlMappingNames)
@@ -294,7 +297,7 @@ public class GameController : MonoBehaviour
         UpdateControlText(randomKeyName, name);
         keyNamesCopy.RemoveAt(randomIndex);
       }
-      yield return new WaitForSeconds(2);
+      yield return new WaitForSeconds(alertDuration);
       UpdateAlertText(true);
     }
   }
