@@ -532,7 +532,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'UP / W
+  m_Text: 'W / UP
 
     forward'
 --- !u!222 &1345504920
@@ -692,7 +692,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'RIGHT / D
+  m_Text: 'D / RIGHT
 
     right'
 --- !u!222 &1669949493
@@ -772,7 +772,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'DOWN / S
+  m_Text: 'S / DOWN
 
     backward'
 --- !u!222 &1840307434
@@ -955,7 +955,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'LEFT / A
+  m_Text: 'A / LEFT
 
     left'
 --- !u!222 &1992522215

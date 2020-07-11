@@ -100,10 +100,10 @@ public class GameController : MonoBehaviour
       Debug.LogError("Keys already set up!");
       return;
     }
-    keys.Add(keyNames[0], new Key("up", "w"));
-    keys.Add(keyNames[1], new Key("left", "a"));
-    keys.Add(keyNames[2], new Key("down", "s"));
-    keys.Add(keyNames[3], new Key("right", "d"));
+    keys.Add(keyNames[0], new Key("w", "up"));
+    keys.Add(keyNames[1], new Key("a", "left"));
+    keys.Add(keyNames[2], new Key("s", "down"));
+    keys.Add(keyNames[3], new Key("d", "right"));
     keys.Add(keyNames[4], new Key("space", null));
   }
 
