@@ -132,6 +132,7 @@ public class GameController : MonoBehaviour
     SetUpControlMappings();
     SetUpKeys();
     SetUpPressedKeys();
+    StartCoroutine(ChangeControlMappings());
   }
 
   private void UpdatePressedKeys()
@@ -183,5 +184,24 @@ public class GameController : MonoBehaviour
   public bool ShouldFire()
   {
     return pressedKeys[controlMappings[controlMappingNames[4]]];
+  }
+
+  IEnumerator ChangeControlMappings()
+  {
+    yield return new WaitForSeconds(5);
+    Debug.Log("changing controls!");
+    List<string> keyNamesCopy = new List<string>(keyNames);
+    foreach (string name in controlMappingNames)
+    {
+      if (!controlMappings.ContainsKey(name))
+      {
+        Debug.LogError("Key '" + name + "' doesn't exist in controlMappings!");
+        continue;
+      }
+      int randomIndex = Random.Range(0, keyNamesCopy.Count);
+      string randomKeyName = keyNamesCopy[randomIndex];
+      controlMappings[name] = randomKeyName;
+      keyNamesCopy.RemoveAt(randomIndex);
+    }
   }
 }
