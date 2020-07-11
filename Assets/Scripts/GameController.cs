@@ -27,17 +27,38 @@ class Key
 
 public class GameController : MonoBehaviour
 {
+  public Text alertText;
   public Text upText;
   public Text leftText;
   public Text downText;
   public Text rightText;
   public Text spaceText;
 
+  private List<string> alertMessages = new List<string>();
   private List<string> keyNames = new List<string>();
   private List<string> controlMappingNames = new List<string>();
   private Dictionary<string, string> controlMappings = new Dictionary<string, string>();
   private Dictionary<string, Key> keys = new Dictionary<string, Key>();
   private Dictionary<string, bool> pressedKeys = new Dictionary<string, bool>();
+
+  private void SetUpAlertMessages()
+  {
+    if (alertMessages.Count > 0)
+    {
+      Debug.LogError("Alert messages already set up!");
+      return;
+    }
+    alertMessages.Add("Haha good luck with that");
+    alertMessages.Add("Oops");
+    alertMessages.Add("Um...");
+    alertMessages.Add("Someone dropped a cat on the keyboard");
+    alertMessages.Add("Really need to get that fixed");
+    alertMessages.Add("LOL");
+    alertMessages.Add("Oh, the inanity!");
+    alertMessages.Add("Pizza's here");
+    alertMessages.Add("Have you tried turning it off and on again");
+    alertMessages.Add("Do or do not. There is no try");
+  }
 
   private void SetUpKeyNames()
   {
@@ -134,6 +155,7 @@ public class GameController : MonoBehaviour
 
   void Start()
   {
+    SetUpAlertMessages();
     SetUpKeyNames();
     SetUpControlMappingNames();
     SetUpControlMappings();
@@ -193,7 +215,7 @@ public class GameController : MonoBehaviour
     return pressedKeys[controlMappings[controlMappingNames[4]]];
   }
 
-  private void UpdateText(string keyName, string controlMappingName)
+  private void UpdateControlText(string keyName, string controlMappingName)
   {
     Text text;
     Key key;
@@ -234,18 +256,30 @@ public class GameController : MonoBehaviour
     text.text = updatedTop.ToUpper() + newLine + updatedBottom;
   }
 
+  private string RandomAlertMessage()
+  {
+    return alertMessages[Random.Range(0, alertMessages.Count)];
+  }
+
+  private void UpdateAlertText(bool shouldClear = false)
+  {
+    alertText.text =
+        shouldClear ? "" : "Controls switch!\n" + RandomAlertMessage();
+  }
+
   IEnumerator ChangeControlMappings()
   {
+    UpdateAlertText(true);
     for (int i = 0; i < keyNames.Count; i++)
     {
       string keyName = keyNames[i];
       string controlMappingName = controlMappingNames[i];
-      UpdateText(keyName, controlMappingName);
+      UpdateControlText(keyName, controlMappingName);
     }
     while (true)
     {
       yield return new WaitForSeconds(5);
-      Debug.Log("changing controls!");
+      UpdateAlertText();
       List<string> keyNamesCopy = new List<string>(keyNames);
       foreach (string name in controlMappingNames)
       {
@@ -257,9 +291,11 @@ public class GameController : MonoBehaviour
         int randomIndex = Random.Range(0, keyNamesCopy.Count);
         string randomKeyName = keyNamesCopy[randomIndex];
         controlMappings[name] = randomKeyName;
-        UpdateText(randomKeyName, name);
+        UpdateControlText(randomKeyName, name);
         keyNamesCopy.RemoveAt(randomIndex);
       }
+      yield return new WaitForSeconds(2);
+      UpdateAlertText(true);
     }
   }
 }
