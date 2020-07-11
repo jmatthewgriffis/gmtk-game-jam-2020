@@ -28,9 +28,9 @@ public class GameController : MonoBehaviour
 {
   private List<string> keyNames = new List<string>();
   private List<string> controlMappingNames = new List<string>();
+  private Dictionary<string, string> controlMappings = new Dictionary<string, string>();
   private Dictionary<string, Key> keys = new Dictionary<string, Key>();
   private Dictionary<string, bool> pressedKeys = new Dictionary<string, bool>();
-  private Dictionary<string, string> controlMappings = new Dictionary<string, string>();
 
   private void SetUpKeyNames()
   {
@@ -141,6 +141,11 @@ public class GameController : MonoBehaviour
       if (!keys.ContainsKey(name))
       {
         Debug.LogError("Key '" + name + "' doesn't exist in keys!");
+        continue;
+      }
+      if (!pressedKeys.ContainsKey(name))
+      {
+        Debug.LogError("Key '" + name + "' doesn't exist in pressedKeys!");
         continue;
       }
       Key key = keys[name];
