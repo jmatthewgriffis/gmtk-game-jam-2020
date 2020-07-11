@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 class Key
 {
@@ -26,6 +27,12 @@ class Key
 
 public class GameController : MonoBehaviour
 {
+  public Text upText;
+  public Text leftText;
+  public Text downText;
+  public Text rightText;
+  public Text spaceText;
+
   private List<string> keyNames = new List<string>();
   private List<string> controlMappingNames = new List<string>();
   private Dictionary<string, string> controlMappings = new Dictionary<string, string>();
@@ -186,8 +193,55 @@ public class GameController : MonoBehaviour
     return pressedKeys[controlMappings[controlMappingNames[4]]];
   }
 
+  private void UpdateText(string keyName, string controlMappingName)
+  {
+    Text text;
+    Key key;
+    string divider = " / ";
+    string newLine = "\n";
+
+    switch (keyName)
+    {
+      case "up":
+        text = upText;
+        key = keys[keyNames[0]];
+        break;
+      case "left":
+        text = leftText;
+        key = keys[keyNames[1]];
+        break;
+      case "down":
+        text = downText;
+        key = keys[keyNames[2]];
+        break;
+      case "right":
+        text = rightText;
+        key = keys[keyNames[3]];
+        break;
+      case "space":
+        text = spaceText;
+        key = keys[keyNames[4]];
+        break;
+      default:
+        text = null;
+        key = null;
+        break;
+    }
+
+    string updatedTop =
+        key.Main() + (key.Alt() != null ? divider + key.Alt() : "");
+    string updatedBottom = controlMappingName;
+    text.text = updatedTop.ToUpper() + newLine + updatedBottom;
+  }
+
   IEnumerator ChangeControlMappings()
   {
+    for (int i = 0; i < keyNames.Count; i++)
+    {
+      string keyName = keyNames[i];
+      string controlMappingName = controlMappingNames[i];
+      UpdateText(keyName, controlMappingName);
+    }
     while (true)
     {
       yield return new WaitForSeconds(5);
@@ -203,6 +257,7 @@ public class GameController : MonoBehaviour
         int randomIndex = Random.Range(0, keyNamesCopy.Count);
         string randomKeyName = keyNamesCopy[randomIndex];
         controlMappings[name] = randomKeyName;
+        UpdateText(randomKeyName, name);
         keyNamesCopy.RemoveAt(randomIndex);
       }
     }

@@ -368,6 +368,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a523da7f9c41042d8be875b6bd89524d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upText: {fileID: 1345504919}
+  leftText: {fileID: 1992522214}
+  downText: {fileID: 1840307433}
+  rightText: {fileID: 1669949492}
+  spaceText: {fileID: 1589851495}
 --- !u!4 &1071322049
 Transform:
   m_ObjectHideFlags: 0
