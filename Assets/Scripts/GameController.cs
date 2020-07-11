@@ -2,45 +2,181 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+class Key
+{
+  private string main;
+  private string alt;
+
+  public Key(string _main, string _alt)
+  {
+    main = _main;
+    alt = _alt;
+  }
+
+  public string Main()
+  {
+    return main;
+  }
+
+  public string Alt()
+  {
+    return alt;
+  }
+}
+
 public class GameController : MonoBehaviour
 {
-  private bool isUpPressed = false;
-  private bool isLeftPressed = false;
-  private bool isDownPressed = false;
-  private bool isRightPressed = false;
-  private bool isSpacePressed = false;
+  private List<string> keyNames = new List<string>();
+  private List<string> controlMappingNames = new List<string>();
+  private Dictionary<string, Key> keys = new Dictionary<string, Key>();
+  private Dictionary<string, bool> pressedKeys = new Dictionary<string, bool>();
+  private Dictionary<string, string> controlMappings = new Dictionary<string, string>();
+
+  private void SetUpKeyNames()
+  {
+    if (keyNames.Count > 0)
+    {
+      Debug.LogError("Key names already set up!");
+      return;
+    }
+    keyNames.Add("up");
+    keyNames.Add("left");
+    keyNames.Add("down");
+    keyNames.Add("right");
+    keyNames.Add("space");
+  }
+
+  private void SetUpControlMappingNames()
+  {
+    if (controlMappingNames.Count > 0)
+    {
+      Debug.LogError("Control mapping names already set up!");
+      return;
+    }
+    controlMappingNames.Add("forward");
+    controlMappingNames.Add("left");
+    controlMappingNames.Add("backward");
+    controlMappingNames.Add("right");
+    controlMappingNames.Add("fire");
+  }
+
+  private void SetUpControlMappings()
+  {
+    if (keyNames.Count == 0)
+    {
+      Debug.LogError("Key names not set up!");
+      return;
+    }
+    if (controlMappingNames.Count == 0)
+    {
+      Debug.LogError("Control mapping names not set up!");
+      return;
+    }
+    if (controlMappings.Count > 0)
+    {
+      Debug.LogError("Control mappings already set up!");
+      return;
+    }
+    if (controlMappingNames.Count != keyNames.Count)
+    {
+      Debug.LogError("Counts don't match!");
+      return;
+    }
+    for (int i = 0; i < controlMappingNames.Count; i++)
+    {
+      controlMappings.Add(controlMappingNames[i], keyNames[i]);
+    }
+  }
+
+  private void SetUpKeys()
+  {
+    if (keyNames.Count == 0)
+    {
+      Debug.LogError("Key names not set up!");
+      return;
+    }
+    if (keys.Count > 0)
+    {
+      Debug.LogError("Keys already set up!");
+      return;
+    }
+    keys.Add(keyNames[0], new Key("up", "w"));
+    keys.Add(keyNames[1], new Key("left", "a"));
+    keys.Add(keyNames[2], new Key("down", "s"));
+    keys.Add(keyNames[3], new Key("right", "d"));
+    keys.Add(keyNames[4], new Key("space", null));
+  }
+
+  private void SetUpPressedKeys()
+  {
+    if (keyNames.Count == 0)
+    {
+      Debug.LogError("Key names not set up!");
+      return;
+    }
+    if (pressedKeys.Count > 0)
+    {
+      Debug.LogError("Pressed keys already set up!");
+      return;
+    }
+    foreach (string name in keyNames)
+    {
+      pressedKeys.Add(name, false);
+    }
+  }
+
+  void Start()
+  {
+    SetUpKeyNames();
+    SetUpControlMappingNames();
+    SetUpControlMappings();
+    SetUpKeys();
+    SetUpPressedKeys();
+  }
+
+  private void UpdatePressedKeys()
+  {
+    foreach (string name in keyNames)
+    {
+      if (!keys.ContainsKey(name))
+      {
+        Debug.LogError("Key '" + name + "' doesn't exist in keys!");
+        continue;
+      }
+      Key key = keys[name];
+      pressedKeys[name] =
+        (key.Main() != null && Input.GetKey(key.Main())) ||
+        (key.Alt() != null && Input.GetKey(key.Alt()));
+    }
+  }
 
   void Update()
   {
-    isUpPressed = Input.GetKey("w") || Input.GetKey("up");
-    isLeftPressed = Input.GetKey("a") || Input.GetKey("left");
-    isDownPressed = Input.GetKey("s") || Input.GetKey("down");
-    isRightPressed = Input.GetKey("d") || Input.GetKey("right");
-    isSpacePressed = Input.GetKey("space");
+    UpdatePressedKeys();
   }
 
   public bool ShouldMoveForward()
   {
-    return isUpPressed;
+    return pressedKeys[controlMappings[controlMappingNames[0]]];
   }
 
   public bool ShouldRotateLeft()
   {
-    return isLeftPressed;
+    return pressedKeys[controlMappings[controlMappingNames[1]]];
   }
 
   public bool ShouldMoveBackward()
   {
-    return isDownPressed;
+    return pressedKeys[controlMappings[controlMappingNames[2]]];
   }
 
   public bool ShouldRotateRight()
   {
-    return isRightPressed;
+    return pressedKeys[controlMappings[controlMappingNames[3]]];
   }
 
   public bool ShouldFire()
   {
-    return isSpacePressed;
+    return pressedKeys[controlMappings[controlMappingNames[4]]];
   }
 }
