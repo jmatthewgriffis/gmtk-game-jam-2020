@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
   public float moveSpeed = 5f;
   public float rotateSpeed = 250f;
 
-  private Rigidbody2D rb;
+  private Rigidbody2D rb2D;
   private GameController gameController;
 
   private void MissingComponent(string name)
@@ -31,21 +31,23 @@ public class PlayerController : MonoBehaviour
   }
   void Start()
   {
-    rb = GetRigidbody2D();
+    rb2D = GetRigidbody2D();
     gameController = GetGameController();
   }
 
   private void Move(float speed)
   {
-    transform.Translate(new Vector3(0f, Time.deltaTime, 0f) * speed);
+    Vector3 worldOffset3D = transform.TransformDirection(new Vector3(0f, speed, 0f));
+    Vector2 worldOffset2D = new Vector2(worldOffset3D.x, worldOffset3D.y);
+    rb2D.MovePosition(rb2D.position + worldOffset2D * Time.fixedDeltaTime);
   }
 
   private void Rotate(float speed)
   {
-    transform.Rotate(new Vector3(0f, 0f, Time.deltaTime) * speed);
+    rb2D.MoveRotation(rb2D.rotation + speed * Time.fixedDeltaTime);
   }
 
-  void Update()
+  void FixedUpdate()
   {
     if (gameController.ShouldMoveForward()) Move(moveSpeed);
     if (gameController.ShouldRotateLeft()) Rotate(rotateSpeed);
