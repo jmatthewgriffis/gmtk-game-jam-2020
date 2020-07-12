@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-  public float moveSpeed = 5f;
+  public float moveSpeed = 4f;
   public float rotateSpeed = 250f;
+  public float fireSpeed = 0.5f;
+  public Transform spawnPoint;
+  public GameObject bolt;
 
   private Rigidbody2D rb2D;
   private GameController gameController;
   private bool isMovementEnabled = true;
+  private Coroutine fire;
 
   private void MissingComponent(string name)
   {
@@ -34,6 +38,29 @@ public class PlayerController : MonoBehaviour
   {
     rb2D = GetRigidbody2D();
     gameController = GetGameController();
+  }
+
+  IEnumerator Fire()
+  {
+    while (true)
+    {
+      Instantiate(bolt, spawnPoint.position, spawnPoint.rotation);
+      yield return new WaitForSeconds(fireSpeed);
+    }
+  }
+
+  void Update()
+  {
+    bool shouldFire = gameController.ShouldFire();
+    if (shouldFire && fire == null)
+    {
+      fire = StartCoroutine(Fire());
+    }
+    else if (!shouldFire && fire != null)
+    {
+      StopCoroutine(fire);
+      fire = null;
+    }
   }
 
   private void Move(float speed)
