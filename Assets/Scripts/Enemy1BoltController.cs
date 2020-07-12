@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy1BoltController : MonoBehaviour
 {
-  public float moveSpeed = 5f;
+  public float moveSpeed = 3f;
 
   private Rigidbody2D rb2D;
   private bool isMovementEnabled = true;
