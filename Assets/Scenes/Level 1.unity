@@ -362,6 +362,11 @@ PrefabInstance:
       propertyPath: spaceText
       value: 
       objectReference: {fileID: 2094285136}
+    - target: {fileID: 969783962813458705, guid: 95a478115c98242a8a6820b0075b52ef,
+        type: 3}
+      propertyPath: maxTimeBetweenChanges
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 969783962813458798, guid: 95a478115c98242a8a6820b0075b52ef,
         type: 3}
       propertyPath: m_Name
@@ -478,7 +483,7 @@ PrefabInstance:
     - target: {fileID: 8458660168064845262, guid: 828ab1cd88b9f455dbeaf03c44c371de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 8458660168064845262, guid: 828ab1cd88b9f455dbeaf03c44c371de,
         type: 3}
