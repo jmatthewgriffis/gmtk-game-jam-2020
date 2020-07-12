@@ -10,6 +10,7 @@ public class Enemy1Controller : MonoBehaviour
   public GameObject bolt;
 
   private Rigidbody2D rb2D;
+  private bool isMovementEnabled = true;
 
   private void MissingComponent(string name)
   {
@@ -37,14 +38,18 @@ public class Enemy1Controller : MonoBehaviour
 
   void FixedUpdate()
   {
+    if (!isMovementEnabled) { return; }
     Move();
+  }
+
+  void OnTriggerEnter2D(Collider2D other)
+  {
+    if (other.CompareTag("Player")) isMovementEnabled = false;
+    else if (other.CompareTag("Destroy")) Destroy(gameObject);
   }
 
   void OnTriggerExit2D(Collider2D other)
   {
-    if (other.CompareTag("Range"))
-    {
-      moveSpeed *= -1;
-    }
+    if (other.CompareTag("Range")) moveSpeed *= -1;
   }
 }
