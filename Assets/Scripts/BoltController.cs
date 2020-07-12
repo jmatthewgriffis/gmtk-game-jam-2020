@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoltController : MonoBehaviour
 {
-  public float moveSpeed = 5f;
+  public float moveSpeed = 7f;
 
   private Rigidbody2D rb2D;
 

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a523da7f9c41042d8be875b6bd89524d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementDelay: 0.5
+  movementDelay: 0.25
   minTimeBetweenChanges: 10
   maxTimeBetweenChanges: 15
   alertDuration: 5

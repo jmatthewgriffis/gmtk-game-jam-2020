@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  fireSpeed: 1
+  fireDelay: 2
+  fireSpeed: 2
   spawnPoint: {fileID: 7573912473944536785}
   bolt: {fileID: 2077888086034593681, guid: 9547849e60d3b4b0495458a3a33f22be, type: 3}
 --- !u!50 &151987654960715937
