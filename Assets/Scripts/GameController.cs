@@ -63,6 +63,17 @@ public class GameController : MonoBehaviour
     alertMessages.Add("Do or do not - there is no try");
   }
 
+  private string RandomAlertMessage()
+  {
+    return alertMessages[Random.Range(0, alertMessages.Count)];
+  }
+
+  private void UpdateAlertText(bool shouldClear = false)
+  {
+    alertText.text =
+        shouldClear ? "" : "The controls have changed!\n" + RandomAlertMessage();
+  }
+
   private void SetUpKeyNames()
   {
     if (keyNames.Count > 0)
@@ -161,8 +172,14 @@ public class GameController : MonoBehaviour
     isMovementEnabled = true;
   }
 
+  public void DisableMovement()
+  {
+    isMovementEnabled = false;
+  }
+
   void Start()
   {
+    UpdateAlertText(true);
     SetUpAlertMessages();
     SetUpKeyNames();
     SetUpControlMappingNames();
@@ -265,20 +282,8 @@ public class GameController : MonoBehaviour
     text.text = updatedTop.ToUpper() + newLine + updatedBottom;
   }
 
-  private string RandomAlertMessage()
-  {
-    return alertMessages[Random.Range(0, alertMessages.Count)];
-  }
-
-  private void UpdateAlertText(bool shouldClear = false)
-  {
-    alertText.text =
-        shouldClear ? "" : "The controls have changed!\n" + RandomAlertMessage();
-  }
-
   IEnumerator ChangeControlMappings()
   {
-    UpdateAlertText(true);
     for (int i = 0; i < keyNames.Count; i++)
     {
       string keyName = keyNames[i];
@@ -308,8 +313,13 @@ public class GameController : MonoBehaviour
     }
   }
 
-  public void RestartScene()
+  private void _RestartScene()
   {
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
+
+  public void RestartScene(int delay = 0)
+  {
+    Invoke("_RestartScene", delay);
   }
 }

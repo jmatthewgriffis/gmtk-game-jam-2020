@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
   private Rigidbody2D rb2D;
   private GameController gameController;
+  private bool isMovementEnabled = true;
 
   private void MissingComponent(string name)
   {
@@ -49,10 +50,26 @@ public class PlayerController : MonoBehaviour
 
   void FixedUpdate()
   {
+    if (!isMovementEnabled) { return; }
     if (gameController.ShouldMoveForward()) Move(moveSpeed);
     if (gameController.ShouldRotateLeft()) Rotate(rotateSpeed);
     if (gameController.ShouldMoveBackward()) Move(-moveSpeed);
     if (gameController.ShouldRotateRight()) Rotate(-rotateSpeed);
+  }
+
+  private void DisableMovement()
+  {
+    isMovementEnabled = false;
+    gameController.DisableMovement();
+  }
+
+  void OnTriggerEnter2D(Collider2D other)
+  {
+    if (other.CompareTag("Restart"))
+    {
+      DisableMovement();
+      gameController.RestartScene(1);
+    }
   }
 
   void OnTriggerExit2D(Collider2D other)
