@@ -315,11 +315,21 @@ public class GameController : MonoBehaviour
 
   private void _RestartScene()
   {
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 
   public void RestartScene(int delay = 0)
   {
     Invoke("_RestartScene", delay);
+  }
+
+  private void _LoadNextScene()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+  }
+
+  public void LoadNextScene(int delay = 0)
+  {
+    Invoke("_LoadNextScene", delay);
   }
 }

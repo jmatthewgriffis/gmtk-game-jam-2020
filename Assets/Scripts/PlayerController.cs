@@ -92,10 +92,13 @@ public class PlayerController : MonoBehaviour
 
   void OnTriggerEnter2D(Collider2D other)
   {
-    if (other.CompareTag("Restart") || other.CompareTag("Destroy"))
+    bool shouldRestart = other.CompareTag("Restart") || other.CompareTag("Destroy");
+    bool shouldLoadNext = other.CompareTag("Finish");
+    if (shouldRestart || shouldLoadNext)
     {
       DisableMovement();
-      gameController.RestartScene(1);
+      if (shouldRestart) gameController.RestartScene(1);
+      else if (shouldLoadNext) gameController.LoadNextScene(1);
     }
   }
 
