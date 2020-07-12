@@ -28,7 +28,7 @@ class Key
 
 public class GameController : MonoBehaviour
 {
-  public float movementDelay = 1f;
+  public float movementDelay = 0.25f;
   public int minTimeBetweenChanges = 10;
   public int maxTimeBetweenChanges = 20;
   public int alertDuration = 5;
