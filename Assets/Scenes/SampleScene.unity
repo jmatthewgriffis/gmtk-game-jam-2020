@@ -368,6 +368,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a523da7f9c41042d8be875b6bd89524d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenChanges: 10
+  maxTimeBetweenChanges: 20
+  alertDuration: 5
   alertText: {fileID: 1172127642}
   upText: {fileID: 1345504919}
   leftText: {fileID: 1992522214}
@@ -538,9 +541,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Controls switch!
+  m_Text: 'The controls have changed!
 
-    Haha good luck with that'
+    Good luck with that'
 --- !u!222 &1172127643
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -51,16 +51,12 @@ public class GameController : MonoBehaviour
       Debug.LogError("Alert messages already set up!");
       return;
     }
-    alertMessages.Add("Haha good luck with that");
-    alertMessages.Add("Oops");
-    alertMessages.Add("Um...");
+    alertMessages.Add("Good luck with that");
     alertMessages.Add("Someone dropped a cat on the keyboard");
     alertMessages.Add("Really need to get that fixed");
-    alertMessages.Add("LOL");
     alertMessages.Add("Oh, the inanity!");
-    alertMessages.Add("Pizza's here");
-    alertMessages.Add("Have you tried turning it off and on again");
-    alertMessages.Add("Do or do not. There is no try");
+    alertMessages.Add("Have you tried turning it off and on again?");
+    alertMessages.Add("Do or do not - there is no try");
   }
 
   private void SetUpKeyNames()
@@ -267,7 +263,7 @@ public class GameController : MonoBehaviour
   private void UpdateAlertText(bool shouldClear = false)
   {
     alertText.text =
-        shouldClear ? "" : "Controls switch!\n" + RandomAlertMessage();
+        shouldClear ? "" : "The controls have changed!\n" + RandomAlertMessage();
   }
 
   IEnumerator ChangeControlMappings()
