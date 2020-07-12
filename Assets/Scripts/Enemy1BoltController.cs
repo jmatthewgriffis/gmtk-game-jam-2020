@@ -43,6 +43,7 @@ public class Enemy1BoltController : MonoBehaviour
   void OnTriggerEnter2D(Collider2D other)
   {
     if (other.CompareTag("Player")) isMovementEnabled = false;
+    else if (other.CompareTag("Destroy")) Destroy(gameObject);
   }
 
   void OnTriggerExit2D(Collider2D other)

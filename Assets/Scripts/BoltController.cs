@@ -39,7 +39,7 @@ public class BoltController : MonoBehaviour
 
   void OnTriggerEnter2D(Collider2D other)
   {
-    if (other.CompareTag("Restart"))
+    if (other.CompareTag("Restart") || other.CompareTag("Destroy"))
     {
       Destroy(gameObject);
     }
