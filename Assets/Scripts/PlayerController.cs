@@ -54,4 +54,12 @@ public class PlayerController : MonoBehaviour
     if (gameController.ShouldMoveBackward()) Move(-moveSpeed);
     if (gameController.ShouldRotateRight()) Rotate(-rotateSpeed);
   }
+
+  void OnTriggerExit2D(Collider2D other)
+  {
+    if (other.CompareTag("Bounds"))
+    {
+      gameController.RestartScene();
+    }
+  }
 }

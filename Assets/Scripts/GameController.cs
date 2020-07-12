@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 class Key
 {
@@ -27,6 +28,7 @@ class Key
 
 public class GameController : MonoBehaviour
 {
+  public float movementDelay = 1f;
   public int minTimeBetweenChanges = 10;
   public int maxTimeBetweenChanges = 20;
   public int alertDuration = 5;
@@ -37,6 +39,8 @@ public class GameController : MonoBehaviour
   public Text rightText;
   public Text spaceText;
 
+  private bool isMovementEnabled = false;
+  private bool shouldChangeControlMappings = true;
   private List<string> alertMessages = new List<string>();
   private List<string> keyNames = new List<string>();
   private List<string> controlMappingNames = new List<string>();
@@ -152,6 +156,11 @@ public class GameController : MonoBehaviour
     }
   }
 
+  private void EnableMovement()
+  {
+    isMovementEnabled = true;
+  }
+
   void Start()
   {
     SetUpAlertMessages();
@@ -160,7 +169,8 @@ public class GameController : MonoBehaviour
     SetUpControlMappings();
     SetUpKeys();
     SetUpPressedKeys();
-    StartCoroutine(ChangeControlMappings());
+    Invoke("EnableMovement", movementDelay);
+    if (shouldChangeControlMappings) { StartCoroutine(ChangeControlMappings()); }
   }
 
   private void UpdatePressedKeys()
@@ -186,7 +196,7 @@ public class GameController : MonoBehaviour
 
   void Update()
   {
-    UpdatePressedKeys();
+    if (isMovementEnabled) { UpdatePressedKeys(); }
   }
 
   public bool ShouldMoveForward()
@@ -296,5 +306,10 @@ public class GameController : MonoBehaviour
       yield return new WaitForSeconds(alertDuration);
       UpdateAlertText(true);
     }
+  }
+
+  public void RestartScene()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
   }
 }
